@@ -5,5 +5,17 @@ services:
     command: yarn dev:server
     volumes:
       - .:/usr/app/
+    depends_on:
+      - postgres-db
     ports:
       - "3333:3333"
+
+  postgres-db:
+    image: postgres:12
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - 5432:5432
