@@ -1,7 +1,12 @@
 version: '3'
+
 services:
-  go-barber-api:
+  gobarber_base:
     build: .
+
+  go-barber-api:
+    container_name: gobarber-api
+    extends: gobarber_base
     command: yarn dev:server
     volumes:
       - .:/usr/app/
@@ -11,6 +16,7 @@ services:
       - "3333:3333"
 
   postgres-db:
+    container_name: gobarber-postgres
     image: postgres:12
     restart: always
     environment:
@@ -19,3 +25,9 @@ services:
       - POSTGRES_DB=postgres
     ports:
       - 5432:5432
+
+  migration:
+    extends: gobarber_base
+    command: yarn typeorm migration:run
+    depends_on:
+      - postgres-db

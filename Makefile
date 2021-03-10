@@ -1,5 +1,5 @@
 run-local:
-	docker-compose up
+	docker-compose up go-barber-api
 down:
 	docker-compose down
 debug:
@@ -7,3 +7,5 @@ debug:
 clean:
 	docker-compose stop && docker-compose rm -f
 rebuild:	clean	debug
+migrate:
+	docker-compose up migration
